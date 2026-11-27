@@ -1,4 +1,4 @@
-name: CI Build Spring Boot App
+name: CI, CD Build Spring Boot App
 
 on:
   push:
@@ -49,3 +49,15 @@ jobs:
           cp ${{ github.workspace }}/target/*.jar \
              /home/ubuntu/ewallet_project/ewallet_source/ewallet.jar
           chown ubuntu:ubuntu /home/ubuntu/ewallet_project/ewallet_source/ewallet.jar
+  deploy:
+    name: Deploy Project
+    runs-on: self-hosted
+    needs: build
+    
+    steps:
+      - name: Restart ewallet service
+        run: |
+          sudo systemctl daemon-reload
+          sudo systemctl restart ewallet
+          sudo systemctl status ewallet --no-pager
+
