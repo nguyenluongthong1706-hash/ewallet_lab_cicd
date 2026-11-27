@@ -1,0 +1,10 @@
+package com.vti.payment_api.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+
+public record UpdateUserRequest(
+    @NotBlank(message = "Họ tên không được để trống")
+    String fullName
+) {
+
+}
